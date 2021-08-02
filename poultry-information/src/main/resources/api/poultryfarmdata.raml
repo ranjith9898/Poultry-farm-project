@@ -1,0 +1,55 @@
+#%RAML 1.0
+title: poultryfarmdata
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+      client_secret:
+        type: string
+    responses:
+      401:
+        description: Unauthorized or invalid client application credentials
+      500:
+        description: Bad response from authorization server, or WSDL SOAP Fault error
+  
+/allhensinformation:
+  get:
+    displayName: Displayallhensinformaion
+    is:
+      - client-id-required
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include allhenresponce.raml
+            
+/particularcompanybread:
+  get:
+   description: Displayparticularcompanybread
+   is:
+    - client-id-required
+   queryParameters:
+    comapanyname:
+      required: true
+      maxLength: 3
+      minLength: 3
+
+   responses:
+    200:
+      body:
+        application/json:
+          example: !include Particularcompany.raml
+         
+/oneparticularhen/{onehen}:
+ get:
+  displayName: onehen
+  is:
+    - client-id-required
+  responses:
+    200:
+      body:
+        application/json:
+          example: !include oneparticulahen.raml 
+                                                                      
+                              
